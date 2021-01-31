@@ -13,7 +13,7 @@ function languageSort (a, b) {
 
 languages.sort(languageSort)
 
-module.exports.getItems = (lang = 'en', shuffle = false) => {
+module.exports.getItems = (lang = 'en', shuffle = false, total = 100) => {
   let choices, questions
   try {
     questions = require(`./data/${lang}/questions.json`)
@@ -23,7 +23,7 @@ module.exports.getItems = (lang = 'en', shuffle = false) => {
   }
 
   const inventory = shuffle === true ? knuthShuffle(questions) : questions
-  return inventory.map((question, i) => Object.assign(question, { num: ++i, choices: choices[question.keyed] }))
+  return inventory.map((question, i) => Object.assign(question, { num: ++i, choices: choices[question.keyed] })).slice(0,total)
 }
 
 module.exports.getInfo = () => (
